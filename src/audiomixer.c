@@ -521,7 +521,7 @@ static FILTER_DLL g_channel_strip_filter_dll = {
             "Aux ID",
             "Aux Send",
             "\xE5\xAF\xBC\xE5\x87\xBA\xE9\x9F\xB3\xE9\x87\x8F" /* 出力音量 */,
-            "\xE5\xA3\xB0\xE9\x81\x93\x" /* 左右 */,
+            "\xE5\xA3\xB0\xE9\x81\x93" /* 声道 */,
         },
     .track_default = (int[]){-1, 0, 0, 200, 0, 3000, 0, 6000, 0, 1800, 5500, -1, -10000, 0, 0},
     .track_s = (int[]){-1, -10000, 0, 1, -10000, 1, -10000, 0, 0, 0, 0, -1, -10000, -10000, -10000},
