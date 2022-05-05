@@ -73,12 +73,12 @@ void error_message_box(error e, HWND const window, wchar_t const *const msg) {
     err = ethru(err);
     goto cleanup;
   }
-  message_box(window, errmsg.ptr, L"チャンネルストリップ " VERSION_WIDE, MB_ICONERROR);
+  message_box(window, errmsg.ptr, L"通道条 " VERSION_WIDE, MB_ICONERROR);
 
 cleanup:
   ereport(sfree(&errmsg));
   if (efailed(err)) {
-    ereportmsg(err, &native_unmanaged(NSTR("エラーダイアログの表示に失敗しました。")));
+    ereportmsg(err, &native_unmanaged(NSTR("错误对话框显示失败。")));
   }
   ereport(e);
 }
