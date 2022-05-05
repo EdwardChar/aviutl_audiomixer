@@ -73,7 +73,7 @@ void error_message_box(error e, HWND const window, wchar_t const *const msg) {
     err = ethru(err);
     goto cleanup;
   }
-  message_box(window, errmsg.ptr, L"通道条 " VERSION_WIDE, MB_ICONERROR);
+  message_box(window, errmsg.ptr, L"通道条" VERSION_WIDE, MB_ICONERROR);
 
 cleanup:
   ereport(sfree(&errmsg));
