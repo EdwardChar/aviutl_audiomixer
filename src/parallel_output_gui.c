@@ -41,7 +41,7 @@ NODISCARD static error show_save_dialog(HWND const owner,
       .hInstance = get_hinstance(),
       .hwndOwner = owner,
       .lpstrTitle = title->ptr,
-      .lpstrFilter = L"Wave ファイル(*.wav)\0*.wav\0",
+      .lpstrFilter = L"Wave 文件(*.wav)\0*.wav\0",
       .nFilterIndex = 1,
       .lpstrDefExt = L"wav",
       .lpstrFile = tmp.ptr,
@@ -228,7 +228,7 @@ static BOOL wndproc_init_dialog(HWND const window, struct parallel_output_dialog
   {
     HWND const h = GetDlgItem(window, ID_CMB_FORMAT);
     SendMessageW(h, CB_ADDSTRING, 0, (LPARAM)L"16bit");
-    SendMessageW(h, CB_ADDSTRING, 0, (LPARAM)L"32bit float（推奨）");
+    SendMessageW(h, CB_ADDSTRING, 0, (LPARAM)L"32bit float（推荐）");
     WPARAM idx = 1;
     switch (dlg->options->bit_format) {
     case parallel_output_bit_format_int16:
@@ -325,7 +325,7 @@ cleanup:
       ereport(sfree(&dlg->ctxi->pub.options.filename));
       ereport(mem_free(&dlg->ctxi));
     }
-    error_message_box(err, window, L"エクスポートが開始できませんでした。");
+    error_message_box(err, window, L"导出未能开始。");
   }
   return TRUE;
 }
@@ -340,7 +340,7 @@ static BOOL abort_export(HWND const window) {
   atomic_store_explicit(&dlg->ctxi->cancel_requested, true, memory_order_relaxed);
 cleanup:
   if (efailed(err)) {
-    ereportmsg(err, &native_unmanaged_const(NSTR("エクスポートの中断に失敗しました。")));
+    ereportmsg(err, &native_unmanaged_const(NSTR("导出未能完成。")));
   }
   return TRUE;
 }
@@ -367,7 +367,7 @@ cleanup:
   ereport(sfree(&dlg->ctxi->pub.options.filename));
   ereport(mem_free(&dlg->ctxi));
   if (efailed(err)) {
-    error_message_box(err, window, L"エクスポートを完了できませんでした。");
+    error_message_box(err, window, L"导出未能完成。");
   }
   enable_controls(window, TRUE);
   SendMessageW(GetDlgItem(window, ID_PROGRESS), PBM_SETPOS, 0, 0);
@@ -381,8 +381,8 @@ static BOOL closing(HWND const window) {
     return TRUE;
   }
   if (message_box(window,
-                  L"パラアウトはまだ完了していません。\r\n中断しますか？",
-                  L"チャンネルストリップ - パラアウト",
+                  L"分轨输出尚未完成。\r\n是否中断？",
+                  L"通道条 - 分轨输出",
                   MB_ICONQUESTION | MB_OKCANCEL) == IDCANCEL) {
     return TRUE;
   }
@@ -414,7 +414,7 @@ NODISCARD static BOOL select_parallel_output_file(HWND const window) {
     err = ethru(err);
     goto cleanup;
   }
-  err = show_save_dialog(window, &wstr_unmanaged_const(L"出力先を選択してください"), &tmp, &tmp);
+  err = show_save_dialog(window, &wstr_unmanaged_const(L"请选择导出目录"), &tmp, &tmp);
   restore_disabled_family_windows(disabled_windows);
   if (efailed(err)) {
     if (eis(err, err_type_generic, err_abort)) {
@@ -428,7 +428,7 @@ NODISCARD static BOOL select_parallel_output_file(HWND const window) {
 cleanup:
   ereport(sfree(&tmp));
   if (efailed(err)) {
-    error_message_box(err, window, L"ファイル選択ダイアログの表示に失敗しました。");
+    error_message_box(err, window, L"选择文件对话框显示失败。");
   }
   return TRUE;
 }

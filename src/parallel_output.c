@@ -285,7 +285,7 @@ NODISCARD static error create_file(HANDLE *const dest,
       tmp.ptr, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
   if (h == INVALID_HANDLE_VALUE) {
     struct wstr errmsg = {0};
-    ereport(scpym(&errmsg, L"ファイル \"", tmp.ptr, L"\" を作成できませんでした。"));
+    ereport(scpym(&errmsg, L"无法创建文件 \"", tmp.ptr, L"\" 。"));
     err = emsg(err_type_hresult, HRESULT_FROM_WIN32(GetLastError()), errmsg.ptr ? &errmsg : NULL);
     goto cleanup;
   }
@@ -556,7 +556,7 @@ static void entry_free_and_remove_all(struct parallel_output *const p, int const
     if (esucceeded(err)) {
       if (!DeleteFileW(tmp.ptr)) {
         struct wstr errmsg = {0};
-        ereport(scpym(&errmsg, L"ファイル \"", tmp.ptr, L"\" を削除できませんでした。"));
+        ereport(scpym(&errmsg, L"无法删除文件 \"", tmp.ptr, L"\" 。"));
         ereport(emsg(err_type_hresult, HRESULT_FROM_WIN32(GetLastError()), errmsg.ptr ? &errmsg : NULL));
       }
     } else {

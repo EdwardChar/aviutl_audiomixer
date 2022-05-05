@@ -53,7 +53,7 @@ cleanup:
 }
 
 NODISCARD static error find_exedit_filter(FILTER const **const exedit_fp, bool *const is_enpatched) {
-  static TCHAR const exedit_name_mbcs[] = "\x8a\x67\x92\xa3\x95\xd2\x8f\x57"; // "拡張編集"
+  static TCHAR const exedit_name_mbcs[] = "\xE6\x89\xA9\xE5\xB1\x95\xE7\xBC\x96\xE8\xBE\x91"; // "拡張編集"
   static TCHAR const enpatched_exedit_name_mbcs[] = "Advanced Editing";
 
   *exedit_fp = NULL;
@@ -205,7 +205,7 @@ HWND aviutl_get_exedit_window_must(void) {
   HWND h = NULL;
   error err = aviutl_get_exedit_window(&h);
   if (efailed(err)) {
-    ereportmsg(err, &native_unmanaged(NSTR("拡張編集のウィンドウハンドルが取得できませんでした。")));
+    ereportmsg(err, &native_unmanaged(NSTR("无法获取扩展编辑窗口句柄。")));
     h = GetDesktopWindow();
   }
   return h;
@@ -226,7 +226,7 @@ HWND aviutl_get_my_window_must(void) {
   HWND h = NULL;
   error err = aviutl_get_my_window(&h);
   if (efailed(err)) {
-    ereportmsg(err, &native_unmanaged(NSTR("フィルターのウィンドウハンドルが取得できませんでした。")));
+    ereportmsg(err, &native_unmanaged(NSTR("无法获取滤镜窗口句柄。")));
     h = GetDesktopWindow();
   }
   return h;

@@ -496,7 +496,7 @@ filter_wndproc_channel_strip(HWND window, UINT message, WPARAM wparam, LPARAM lp
 }
 
 // チャンネルストリップ
-#define CHANNEL_STRIP_NAME_MBCS "\x83\x60\x83\x83\x83\x93\x83\x6C\x83\x8B\x83\x58\x83\x67\x83\x8A\x83\x62\x83\x76"
+#define CHANNEL_STRIP_NAME_MBCS "\xE5\x88\x86\xE8\xBD\xA8\xE8\xBE\x93\xE5\x87\xBA"
 static FILTER_DLL g_channel_strip_filter_dll = {
     .flag = FILTER_FLAG_PRIORITY_LOWEST | FILTER_FLAG_ALWAYS_ACTIVE | FILTER_FLAG_AUDIO_FILTER |
             FILTER_FLAG_WINDOW_SIZE | FILTER_FLAG_EX_INFORMATION,
@@ -508,8 +508,8 @@ static FILTER_DLL g_channel_strip_filter_dll = {
     .track_name =
         (TCHAR *[]){
             "ID",
-            "\x93\xFC\x97\xCD\x89\xB9\x97\xCA" /* 入力音量 */,
-            "\x92\x78\x89\x84" /* 遅延 */,
+            "\xE5\xAF\xBC\xE5\x85\xA5\xE9\x9F\xB3\xE9\x87\x8F" /* 入力音量 */,
+            "\xE5\xBB\xB6\xE8\xBF\x9F" /* 遅延 */,
             "EQ LoFreq",
             "EQ LoGain",
             "EQ HiFreq",
@@ -520,8 +520,8 @@ static FILTER_DLL g_channel_strip_filter_dll = {
             "C Release",
             "Aux ID",
             "Aux Send",
-            "\x8F\x6F\x97\xCD\x89\xB9\x97\xCA" /* 出力音量 */,
-            "\x8D\xB6\x89\x45" /* 左右 */,
+            "\xE5\xAF\xBC\xE5\x87\xBA\xE9\x9F\xB3\xE9\x87\x8F" /* 出力音量 */,
+            "\xE5\xA3\xB0\xE9\x81\x93\x" /* 左右 */,
         },
     .track_default = (int[]){-1, 0, 0, 200, 0, 3000, 0, 6000, 0, 1800, 5500, -1, -10000, 0, 0},
     .track_s = (int[]){-1, -10000, 0, 1, -10000, 1, -10000, 0, 0, 0, 0, -1, -10000, -10000, -10000},
@@ -545,7 +545,7 @@ static FILTER_DLL g_aux1_channel_strip_filter_dll = {
     .func_proc = filter_proc_aux1,
 };
 
-#define MASTER_NAME_MBCS "\x83\x7D\x83\x58\x83\x5E\x81\x5B" // マスター
+#define MASTER_NAME_MBCS "\xE4\xB8\xBB\xE9\x80\x9A\xE9\x81\x93" // マスター
 static FILTER_DLL g_master_channel_strip_filter_dll = {
     // FILTER_FLAG_RADIO_BUTTON is not necessary for the operation,
     // but it is necessary to hide the item from ExEdit's menu.
@@ -685,7 +685,7 @@ static int paraout_thread(void *userdata) {
     }
   } else {
     ctx->progress_func(ctx, 100);
-    ctx->progress_text_func(ctx, &wstr_unmanaged_const(L"ファイルの最終処理中..."));
+    ctx->progress_text_func(ctx, &wstr_unmanaged_const(L"文件最终处理中..."));
     err = parallel_output_finalize(po, mixer_get_position(g_mixer));
     if (efailed(err)) {
       err = ethru(err);
@@ -781,7 +781,7 @@ filter_wndproc_parallel_output(HWND window, UINT message, WPARAM wparam, LPARAM 
                                              .editp = editp,
                                          });
     if (efailed(err)) {
-      error_message_box(err, aviutl_get_exedit_window_must(), L"処理中にエラーが発生しました。");
+      error_message_box(err, aviutl_get_exedit_window_must(), L"处理时出错。");
     }
     aviutl_set_pointers(NULL, NULL);
   } break;
@@ -982,7 +982,7 @@ static BOOL main_init(HINSTANCE const inst) {
     return FALSE;
   }
   error_register_reporter(error_reporter);
-  ereportmsg(error_axr_init(), &native_unmanaged(NSTR("エラーメッセージマッパーの登録に失敗しました。")));
+  ereportmsg(error_axr_init(), &native_unmanaged(NSTR("错误消息映射器注册失败。")));
   set_hinstance(inst);
   return TRUE;
 }

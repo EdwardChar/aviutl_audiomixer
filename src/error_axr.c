@@ -5,23 +5,23 @@
 NODISCARD static error get_message(int const code, struct NATIVE_STR *const message) {
   switch (code) {
   case err_axr_unsupported_aviutl_version:
-    return scpy(message, NSTR("AviUtl のバージョンが動作対象外です。"));
+    return scpy(message, NSTR("AviUtl版本超出范围。"));
   case err_axr_exedit_not_found:
-    return scpy(message, NSTR("拡張編集プラグインが見つかりません。"));
+    return scpy(message, NSTR("找不到扩展编辑插件。"));
   case err_axr_exedit_not_found_in_same_dir:
-    return scpy(message, NSTR("拡張編集プラグインが同じフォルダー内に見つかりません。"));
+    return scpy(message, NSTR("无法在同级目录中找到扩展编辑插件。"));
   case err_axr_unsupported_exedit_version:
-    return scpy(message, NSTR("拡張編集プラグインのバージョンが動作対象外です。"));
+    return scpy(message, NSTR("扩展编辑插件版本超出范围。"));
   case err_axr_project_is_not_open:
-    return scpy(message, NSTR("AviUtlのプロジェクトファイル(*.aup)が開かれていません。"));
+    return scpy(message, NSTR("AviUtl工程文件(*.aup)尚未打开。"));
   case err_axr_project_has_not_yet_been_saved:
-    return scpy(message, NSTR("AviUtlのプロジェクトファイル(*.aup)がまだ保存されていません。"));
+    return scpy(message, NSTR("AviUtl工程文件(*.aup)尚未保存。"));
 
   case err_axr_wav_size_limit_exceeded:
     return scpy(message,
-                NSTR("Waveファイルのサイズが仕様上の上限である 4GB を超過してしまうため、処理を続行できません。"));
+                NSTR("wav文件大小超过4gb上限，无法继续进行处理。"));
   }
-  return scpy(message, NSTR("未知のエラーコードです。"));
+  return scpy(message, NSTR("未知的错误。"));
 }
 
 NODISCARD error error_axr_init(void) {
